@@ -19,21 +19,17 @@ Install in one command. Zero config.
 
 ## Why this exists
 
-Claude Code is good at writing code. It's not great at writing *content* - unless you teach it how.
+Claude is already a strong writer. But there's a difference between "write me a blog post" and giving it a full content playbook - voice profiles, SEO structure, copywriting frameworks, platform-specific formatting, and a quality gate that catches lazy patterns before you see them.
 
-**claude-content-engine** is a plugin that installs 8 specialized content skills, a persistent content memory system, and an AI slop detector that runs automatically on every piece of content Claude writes.
+**claude-content-engine** installs 8 content skills, a persistent memory system, and an automatic slop detector into Claude Code. One command, zero config.
 
-The result: Claude stops writing like an AI and starts writing like a senior content strategist.
+You just ask naturally:
 
 ```
 > Turn this blog post into a Twitter thread, LinkedIn post, and newsletter snippet
-
-✓ Content Repurposer activated
-✓ Voice profile loaded from memory
-✓ Quality gate passed - 0 issues
-
-[3 platform-optimized pieces, ready to post]
 ```
+
+Claude picks the right skill, loads your saved voice profile, writes all three pieces, and the quality gate checks the output automatically before you see it.
 
 ## Install
 
@@ -83,16 +79,16 @@ git clone https://github.com/quionie/claude-content-engine.git \
 
 | Skill | What it does | Example prompt |
 |:------|:-------------|:---------------|
-| **Content Workflow** | Chains multiple skills into multi-step pipelines with data flowing between stages | *"Analyze my voice, write a blog post in it, then repurpose for social"* |
+| **Content Workflow** | Runs multiple skills in sequence - output from one feeds into the next | *"Analyze my voice, write a blog post in it, then repurpose for social"* |
 | **Content Memory** | Stores your voice, audience, pillars, and preferences across sessions | *"Remember my brand voice for future sessions"* |
 
 ## Advanced Features
 
-These are the things that separate this from a prompt collection.
+Skills, memory, and hooks working together.
 
 ### 1. Skill Chaining
 
-Skills compose. The output of one skill flows into the next.
+You can chain skills together. The output from one step gets used as input for the next.
 
 ```
 Step 1: Brand Voice Builder   → extracts your voice from samples
@@ -104,7 +100,7 @@ Step 3: Content Repurposer    → creates Twitter thread + LinkedIn + newsletter
 Step 4: Social Media Calendar  → schedules everything into a 2-week plan
 ```
 
-**5 pre-built workflows included:** Content Machine, Brand Launch Kit, Blog-to-Everywhere, Voice-First Content Sprint, and Email Empire. Or describe your own - the orchestrator figures out which skills to chain.
+**5 pre-built workflows included:** Content Machine, Brand Launch Kit, Blog-to-Everywhere, Voice-First Content Sprint, and Email Empire. Or just describe what you want and it'll pick the right skills to run in sequence.
 
 ### 2. Content Memory
 
@@ -120,7 +116,7 @@ Your content context persists across sessions. No more re-explaining your brand 
 └── context.md           ← product, positioning, competitors
 ```
 
-Memory is **local-only** (stored on your machine, never uploaded), **opt-in** (you control what's saved), and **auto-loaded** (other skills read it silently so they start smarter).
+Memory is **local-only** (stored on your machine, never uploaded), **opt-in** (you control what's saved), and **auto-loaded** (skills reference it automatically so you don't repeat yourself).
 
 ### 3. Quality Gate (AI Slop Detector)
 
@@ -167,7 +163,7 @@ claude-content-engine/
 │   ├── email-sequence-builder/SKILL.md
 │   ├── social-media-calendar/SKILL.md
 │   ├── content-workflow/SKILL.md       ← skill chaining orchestrator
-│   └── content-memory/SKILL.md         ← persistent content brain
+│   └── content-memory/SKILL.md         ← persistent content memory
 ├── hooks/                         # quality gate system
 │   ├── hooks.json                      ← hook configuration
 │   ├── quality_gate.py                 ← PostToolUse AI slop detector
@@ -182,7 +178,7 @@ claude-content-engine/
 
 <details>
 <summary><strong>Do I need a specific Claude plan?</strong></summary>
-No. Skills work with any Claude Code plan: Max, Pro, or Team.
+Skills work with any Claude Code subscription that supports custom skills and hooks.
 </details>
 
 <details>
@@ -192,7 +188,7 @@ Yes. Delete any <code>skills/&lt;name&gt;/</code> directory you don't want. The 
 
 <details>
 <summary><strong>Will these conflict with my existing skills?</strong></summary>
-No. Claude picks the most relevant skill per prompt. Your custom skills take priority over pack skills.
+Shouldn't. Claude picks the most relevant skill based on your prompt. If you have overlapping skills, you can always delete the one you don't want.
 </details>
 
 <details>
